@@ -1,0 +1,24 @@
+{
+  "name": "wallet",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@cityofzion/wallet-connect-sdk-react": "^2.5.4",
+    "@walletconnect/sign-client": "^2.9.1",
+    "@walletconnect/types": "^2.9.1",
+    "next": "13.4.12",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "better-sqlite3": "^8.5.0",
+    "eslint": "8.45.0",
+    "eslint-config-next": "13.4.12"
+  }
+}
