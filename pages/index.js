@@ -2,25 +2,41 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import {useWalletConnect} from "@cityofzion/wallet-connect-sdk-react";
+import { BaseDapi } from "@neongd/neo-dapi";
+import { CONST, rpc, sc, wallet, tx, u,BigInteger} from "@cityofzion/neon-core";
+
+
+
+
 
 
 
 export default function Home() {
-
-  const wcSdk = useWalletConnect();
+  
   const func = async() => {
-    const { uri, approval } = await wcSdk.createConnection('neo3:mainnet', ['invokeFunction', 'testInvoke', 'signMessage', 'verifyMessage'])
-    window.open(`https://neon.coz.io/connect?uri=${uri}`, '_blank')?.focus() // do whatever you want with the uri
-    const session = await approval()
-    wcSdk.setSession(session)
-    console.log(session ? 'Connected successfully' : 'Connection refused')
+  
+      // @ts-ignore
+      const instance = new NEOLineN3.Init();
+      // @ts-ignore
+      // NEOLineN3 doesn't have getNetworks function
+      const instance2 = new NEOLine.Init();
+      const network = await instance2.getNetworks();
+      const account = await instance.getAccount();
+      const rpcClient = new rpc.RPCClient("https://rpc.splendor.network/prpc");
+      const balance = await rpcClient.getNep17Balances(account.address);
+
+      console.log(account.address);
+      console.log(network.chainId);
+      console.log(network.networks);
+      console.log(network.defaultNetwork);
+      console.log(balance)
+      return {
+        instance,
+        account,
+        network
+      };
   }
-  if (wcSdk.isConnected()) {
-    console.log(wcSdk.getAccountAddress()) // print the first connected account address
-    console.log(wcSdk.getChainId()) // print the first connected account chain info
-    console.log(wcSdk.session.namespaces); // print the blockchain dictionary with methods, accounts and events
-    console.log(wcSdk.session.peer.metadata); // print the wallet metadata
-  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -30,7 +46,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-       <button onClick={func}>Connect Wallet</button>
+       <button onClick={func}>Connect Wallet and Console Log Test</button>
       </main>
 
       <footer className={styles.footer}>
